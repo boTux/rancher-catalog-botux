@@ -1,6 +1,6 @@
 .catalog:
     name: "Graylog"
-    version: "v2.1.0-1"
+    version: "v2.2.3-1"
     description: "Open source log management that actually works. Pour le port 9000, veuillez passer par un nouveau LoadBalancer si vous voulez le rendre public"
     questions:
         - variable: graylog_fqdn
