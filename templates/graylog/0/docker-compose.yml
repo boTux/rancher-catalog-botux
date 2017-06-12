@@ -72,7 +72,7 @@ graylog:
         - mongodb:mongo
     external_links:
         - ${es_service}:elasticsearch
-  geoip-data:
+geoip-data:
     image: tkrs/maxmind-geoipupdate
     environment:
       GEOIP_DB_DIR: /etc/graylog/server/
