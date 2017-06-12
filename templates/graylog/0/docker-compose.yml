@@ -28,25 +28,60 @@ mongodb:
 graylog:
     restart: always
     environment:
+        DISABLE_TELEMETRY: '1'
         GRAYLOG_PASSWORD_SECRET: ${graylog_secret}
         GRAYLOG_ROOT_PASSWORD_SHA2: ${graylog_password}
         GRAYLOG_WEB_ENDPOINT_URI: https://${graylog_fqdn}/api/
+        GRAYLOG_ROOT_EMAIL: ${graylog_mail_root}
+        GRAYLOG_ROOT_TIMEZONE: ${graylog_timezone}
         GRAYLOG_TRANSPORT_EMAIL_ENABLED: ${graylog_mail_enable}
         GRAYLOG_TRANSPORT_EMAIL_HOSTNAME: ${graylog_mail_hostname}
         GRAYLOG_TRANSPORT_EMAIL_PORT: ${graylog_mail_port}
         GRAYLOG_TRANSPORT_EMAIL_USE_AUTH: ${graylog_mail_use_ssl_auth}
         GRAYLOG_TRANSPORT_EMAIL_USE_TLS: ${graylog_mail_use_tls}
         GRAYLOG_TRANSPORT_EMAIL_USE_SSL: ${graylog_mail_use_ssl}
+        PLUGINS: |-
+          cvtienhoven/graylog-plugin-aggregates
     image: "graylog2/server:2.2.3-1"
+    command:
+    - bash
+    - -c
+    - |
+      echo 'Starting custom init script...' ;
+      PLUGIN_DIR='./plugin' ; PLUGIN_PREFIX='custom' ;
+      if [[ "$$DISABLE_TELEMETRY" == '1' ]] ; then
+        echo 'Removing telemetry plugin:' ;
+        rm -f -v "$$PLUGIN_DIR"/graylog-plugin-anonymous-usage-statistics-*.jar ;
+      fi ;
+      echo 'Removing existing custom plugins:' ; rm -f -v "$$PLUGIN_DIR"/"$$PLUGIN_PREFIX"-*.jar ;
+      PLUGINS=($$PLUGINS) ; for plugin in "$${PLUGINS[@]}" ; do
+        FILE_URL=$$(wget -q -O- "https://api.github.com/repos/$$plugin/releases" | grep -P -o '"browser_download_url":\s+\K"(.+\.jar)"' | head -n 1 | tr -d '"') ;
+        FILE_NAME="$$PLUGIN_PREFIX-$$(basename $$FILE_URL)" ;
+
+        echo "Downloading plugin '$$plugin' from URL '$$FILE_URL' as '$$FILE_NAME'" ;
+        wget -nc -nv -O "$$PLUGIN_DIR/$$FILE_NAME" "$$FILE_URL" ;
+      done ;
+      echo 'Done, starting Graylog.' ; /docker-entrypoint.sh graylog ;
     labels:
         io.rancher.container.hostname_override: container_name
-        io.rancher.sidekicks: graylog-datavolume
+        io.rancher.sidekicks: graylog-datavolume, geoip-data
     volumes_from:
         - graylog-datavolume
+        - geoip-data
     links:
         - mongodb:mongo
     external_links:
         - ${es_service}:elasticsearch
+  geoip-data:
+    image: tkrs/maxmind-geoipupdate
+    environment:
+      GEOIP_DB_DIR: /etc/graylog/server/
+    stdin_open: true
+    volumes:
+    - /etc/graylog/server/
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
 graylog-lb:
     restart: always
     image: rancher/load-balancer-service
