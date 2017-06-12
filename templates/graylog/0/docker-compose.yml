@@ -40,6 +40,7 @@ graylog:
         GRAYLOG_TRANSPORT_EMAIL_USE_AUTH: ${graylog_mail_use_ssl_auth}
         GRAYLOG_TRANSPORT_EMAIL_USE_TLS: ${graylog_mail_use_tls}
         GRAYLOG_TRANSPORT_EMAIL_USE_SSL: ${graylog_mail_use_ssl}
+        GRAYLOG_ELASTICSEARCH_DISCOVERY_ZEN_PING_UNICAST_HOSTS: elasticsearch:9300
         PLUGINS: |-
           cvtienhoven/graylog-plugin-aggregates
     image: "graylog2/server:2.2.3-1"
