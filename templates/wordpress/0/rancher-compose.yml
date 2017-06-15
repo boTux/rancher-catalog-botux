@@ -1,0 +1,20 @@
+.catalog:
+  name: "Wordpress"
+  version: "v0.2-botux"
+  description: "Blog tool, publishing platform and CMS"
+  uuid: Wordpress-0
+  minimum_rancher_version: v0.51.0
+  questions:    
+    - variable: public_port
+      description: "public port to access the wordpress site"
+      label: "Public Port"
+      required: true
+      default: "80"
+      type: "int"
+    - variable: sql_root_password
+      description: "SQL root password"
+      label: "SQL password"
+      required: true
+      default: "BIG_STRONG_PASSWORD"
+      type: "string"
+wordpress:
