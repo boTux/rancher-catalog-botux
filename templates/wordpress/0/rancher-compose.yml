@@ -1,31 +1,37 @@
 .catalog:
   name: "Wordpress boTux"
-  version: "v0.2.4-botux-ssl"
+  version: "v0.2.5-botux-ssl"
   description: "Blog tool, publishing platform and CMS"
   uuid: Wordpress-1
   minimum_rancher_version: v0.51.0
-  questions:    
+  questions:
+    - variable: projet_name
+      description: "Nom du projet. Use in volumes name."
+      label: "Projet:"
+      required: true
+      default: "domain-ext"
+      type: "string"
     - variable: lb_domain
-      description: "domain traefik"
-      label: "LB domain"
+      description: "Traefik loadbalancer wildcard domain."
+      label: "Load-balancer domain"
       required: true
       default: "lb.site.xyz"
       type: "string"
     - variable: sql_root_password
-      description: "SQL root password"
-      label: "SQL password"
+      description: "root@sql"
+      label: "Root SQL password"
       required: true
       default: "BIG_STRONG_PASSWORD"
       type: "string"
     - variable: sql_wordpress_password
-      description: "SQL wordpress password"
-      label: "SQL password"
+      description: "wordpress@sql"
+      label: "Wordpress SQL password"
       required: true
-      default: "BIG_STRONG_PASSWORD"
+      default: "BIG_STRONG_PASSWORD_WP"
       type: "string"
     - variable: sql_wordpress_name
-      description: "SQL wordpress name"
-      label: "SQL DB Name"
+      description: "SQL wordpress database name"
+      label: "SQL Database Name"
       required: true
       default: "wordpress"
       type: "string"

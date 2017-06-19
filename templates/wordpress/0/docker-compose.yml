@@ -5,6 +5,8 @@ db:
     MYSQL_DATABASE: ${sql_wordpress_name}
     MYSQL_USER: ${sql_wordpress_name}
     MYSQL_PASSWORD: ${sql_wordpress_password}
+  volumes:
+    - ${projet_name}-sql:/var/lib/mysql
 
 wordpress:
   restart: always
@@ -13,6 +15,8 @@ wordpress:
     WORDPRESS_DB_PASSWORD: ${sql_wordpress_password}
     WORDPRESS_DB_USER: ${sql_wordpress_name}
     WORDPRESS_DB_NAME: ${sql_wordpress_name}
+  volumes:
+    - ${projet_name}-www:/var/www/
   links:
     - db:mysql
   labels:
