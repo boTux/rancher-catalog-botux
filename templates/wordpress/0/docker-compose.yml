@@ -1,17 +1,6 @@
 version: '2'
 services:
 
-  data:
-    tty: true
-    image: busybox:latest
-    entrypoint:
-      - /bin/true
-    labels:
-      io.rancher.container.start_once: 'true'
-    volumes:
-      - /var/www/html/
-      - /var/lib/mysql
-
   wordpress:
     image: wordpress:latest
     environment:
@@ -31,7 +20,7 @@ services:
       traefik.frontend.passHostHeader: 'true'
       io.rancher.container.hostname_override: container_name
     volumes_from:
-      - data
+      - wordpress-data
 
   db:
     image: mariadb
@@ -43,5 +32,16 @@ services:
       MYSQL_USER: ${sql_wordpress_name}
       MYSQL_PASSWORD: ${sql_wordpress_password}
     volumes_from:
-      - data
+      - wordpress-data
+
+  wordpress-data:
+    tty: true
+    image: busybox:latest
+    entrypoint:
+      - /bin/true
+    labels:
+      io.rancher.container.start_once: 'true'
+    volumes:
+      - /var/www/html/
+      - /var/lib/mysql
 
