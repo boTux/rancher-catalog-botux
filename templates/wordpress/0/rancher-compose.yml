@@ -1,10 +1,16 @@
 .catalog:
   name: "Wordpress boTux"
-  version: "v0.2-botux"
+  version: "v0.2.1-botux"
   description: "Blog tool, publishing platform and CMS"
   uuid: Wordpress-1
   minimum_rancher_version: v0.51.0
   questions:    
+    - variable: lb_domain
+      description: "domain traefik"
+      label: "LB domain"
+      required: true
+      default: "BIG_STRONG_PASSWORD"
+      type: "string"
     - variable: sql_root_password
       description: "SQL root password"
       label: "SQL password"

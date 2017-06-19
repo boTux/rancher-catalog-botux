@@ -11,6 +11,7 @@ services:
       - db:mysql
     labels:
       traefik.enable: ${lb_enable}
+      traefik.domain: ${lb_domain}
       traefik.protocol: ${lb_proto}
       traefik.alias.fqdn: ${domain}
       traefik.port: ${port}
