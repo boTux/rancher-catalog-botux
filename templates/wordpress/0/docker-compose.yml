@@ -3,8 +3,6 @@ services:
 
   wordpress:
     image: wordpress:latest
-    ports:
-      - "80"
     environment:
       WORDPRESS_DB_PASSWORD: ${sql_wordpress_password}
       WORDPRESS_DB_USER: ${sql_wordpress_name}
@@ -12,6 +10,7 @@ services:
     links:
       - db:mysql
     labels:
+      io.rancher.sidekicks: data
       traefik.enable: ${lb_enable}
       traefik.domain: ${lb_domain}
       traefik.protocol: ${lb_proto}
@@ -24,6 +23,8 @@ services:
       - data
   db:
     image: mariadb
+    labels:
+      io.rancher.sidekicks: data
     environment:
       MYSQL_ROOT_PASSWORD: ${sql_root_password}
       MYSQL_DATABASE: ${sql_wordpress_name}
@@ -31,12 +32,10 @@ services:
       MYSQL_PASSWORD: ${sql_wordpress_password}
     volumes_from:
       - data
-
   data:
     tty: true
     image: busybox:latest
     labels:
-      io.rancher.sidekicks: db, wordpress
       io.rancher.container.start_once: 'true'
     volumes:
       - /var/www/html/
