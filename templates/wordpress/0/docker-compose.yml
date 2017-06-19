@@ -1,13 +1,13 @@
 wordpress-data:
-    net: none
-    labels:
-        io.rancher.container.hostname_override: container_name
-        io.rancher.container.start_once: true
-    volumes:
-      - /var/www/html
-      - /var/lib/mysql
-    entrypoint: /bin/true
-    image: busybox
+  net: none
+  labels:
+      io.rancher.container.hostname_override: container_name
+      io.rancher.container.start_once: true
+  volumes:
+    - /var/www/html
+    - /var/lib/mysql
+  entrypoint: /bin/true
+  image: busybox
 
 db:
   image: mariadb
@@ -30,7 +30,6 @@ wordpress:
     - db:mysql
   labels:
     io.rancher.container.hostname_override: container_name
-    io.rancher.sidekicks: wordpress-data, db
     traefik.enable: ${lb_enable}
     traefik.domain: ${lb_domain}
     traefik.protocol: ${lb_proto}
