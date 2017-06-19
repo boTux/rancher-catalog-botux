@@ -9,7 +9,7 @@
       description: "domain traefik"
       label: "LB domain"
       required: true
-      default: "BIG_STRONG_PASSWORD"
+      default: "lb.site.xyz"
       type: "string"
     - variable: sql_root_password
       description: "SQL root password"
@@ -66,6 +66,3 @@ wordpress:
     unhealthy_threshold: 3
     healthy_threshold: 2
     response_timeout: 5000
-wordpress-data:
-  scale: 1
-  retain_ip: true
