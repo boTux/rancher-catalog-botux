@@ -1,6 +1,6 @@
 .catalog:
   name: "Wordpress boTux"
-  version: "v0.2.1-botux"
+  version: "v0.2.1-botux-ssl"
   description: "Blog tool, publishing platform and CMS"
   uuid: Wordpress-1
   minimum_rancher_version: v0.51.0
@@ -60,3 +60,9 @@
       default: "true"
       type: "string"
 wordpress:
+  health_check:
+    port: 80
+    interval: 5000
+    unhealthy_threshold: 3
+    healthy_threshold: 2
+    response_timeout: 5000

@@ -16,6 +16,7 @@ services:
       traefik.alias.fqdn: ${domain}
       traefik.port: ${port}
       traefik.acme: ${letsencrypt}
+      traefik.frontend.passHostHeader: 'true'
   db:
     image: mariadb
     environment:
@@ -24,7 +25,3 @@ services:
       MYSQL_USER: ${sql_wordpress_name}
       MYSQL_PASSWORD: ${sql_wordpress_password}
 
-
-volumes:
-  lets-encrypt:
-    driver: ${STORAGE_DRIVER}
