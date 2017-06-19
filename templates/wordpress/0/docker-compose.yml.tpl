@@ -23,9 +23,11 @@ wordpress:
     io.rancher.container.hostname_override: container_name
     traefik.enable: ${lb_enable}
     traefik.domain: ${lb_domain}
-    traefik.protocol: ${lb_proto}
-    traefik.alias.fqdn: ${domain}
-    traefik.port: ${port}
+    traefik.protocol: http
+    {{- if eq .Values.domain_enable "true" -}}
+      traefik.alias.fqdn: ${domain}
+    {{- end}}
+    traefik.port: 80
     traefik.acme: ${letsencrypt}
     traefik.frontend.passHostHeader: 'true'
 
