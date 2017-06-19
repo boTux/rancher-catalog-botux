@@ -10,7 +10,7 @@ services:
     links:
       - db:mysql
     labels:
-      io.rancher.sidekicks: data
+      io.rancher.sidekicks: wordpress-data
       traefik.enable: ${lb_enable}
       traefik.domain: ${lb_domain}
       traefik.protocol: ${lb_proto}
@@ -25,7 +25,7 @@ services:
   db:
     image: mariadb
     labels:
-      io.rancher.sidekicks: data
+      io.rancher.sidekicks: wordpress-data
     environment:
       MYSQL_ROOT_PASSWORD: ${sql_root_password}
       MYSQL_DATABASE: ${sql_wordpress_name}
