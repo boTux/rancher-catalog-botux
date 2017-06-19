@@ -1,6 +1,17 @@
 version: '2'
 services:
 
+  data:
+    tty: true
+    image: busybox:latest
+    entrypoint:
+      - /bin/true
+    labels:
+      io.rancher.container.start_once: 'true'
+    volumes:
+      - /var/www/html/
+      - /var/lib/mysql
+
   wordpress:
     image: wordpress:latest
     environment:
@@ -21,6 +32,7 @@ services:
       io.rancher.container.hostname_override: container_name
     volumes_from:
       - data
+
   db:
     image: mariadb
     labels:
@@ -32,13 +44,4 @@ services:
       MYSQL_PASSWORD: ${sql_wordpress_password}
     volumes_from:
       - data
-  data:
-    tty: true
-    image: busybox:latest
-    labels:
-      io.rancher.container.start_once: 'true'
-    volumes:
-      - /var/www/html/
-      - /var/lib/mysql
-
 
