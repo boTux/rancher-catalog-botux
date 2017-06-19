@@ -10,12 +10,13 @@ db:
 
 joomla:
   restart: always
-  image: joomla:latest
+  image: joomla:apache-php7
   environment:
     JOOMLA_DB_PASSWORD: ${sql_joomla_password}
     JOOMLA_DB_USER: ${sql_joomla_name}
     JOOMLA_DB_NAME: ${sql_joomla_name}
   volumes:
+    - ${projet_name}-joomla:/usr/src/joomla
     - ${projet_name}-www:/var/www/html
   links:
     - db:mysql

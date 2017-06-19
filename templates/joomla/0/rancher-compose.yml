@@ -1,6 +1,6 @@
 .catalog:
   name: "joomla boTux"
-  version: "v0.1-botux-ssl"
+  version: "v0.2-botux-ssl"
   description: "Blog tool, publishing platform and CMS"
   uuid: joomla-1
   minimum_rancher_version: v0.51.0
