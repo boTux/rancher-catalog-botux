@@ -16,7 +16,7 @@ wordpress:
     WORDPRESS_DB_USER: ${sql_wordpress_name}
     WORDPRESS_DB_NAME: ${sql_wordpress_name}
   volumes:
-    - ${projet_name}-www:/var/www/
+    - ${projet_name}-www:/var/www/html
   links:
     - db:mysql
   labels:
