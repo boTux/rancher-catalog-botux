@@ -2,31 +2,23 @@ version: '2'
 services:
 
   wordpress:
-    image: wordpress
+    image: wordpress:php5.6-fpm-alpine
+    environment:
+      WORDPRESS_DB_PASSWORD: ${sql_wordpress_password}
+      WORDPRESS_DB_NAME: ${sql_wordpress_name}
     links:
       - db:mysql
-
+    labels:
+      traefik.enable: ${lb_enable}
+      traefik.protocol: ${lb_proto}
+      traefik.alias.fqdn: ${domain}
+      traefik.port: ${port}
+      traefik.acme: ${letsencrypt}
   db:
     image: mariadb
     environment:
       MYSQL_ROOT_PASSWORD: ${sql_root_password}
 
-  letsencrypt:
-    image: janeczku/rancher-letsencrypt:v0.4.0
-    environment:
-      EULA: ${EULA}
-      API_VERSION: ${API_VERSION}
-      CERT_NAME: ${CERT_NAME}
-      EMAIL: ${EMAIL}
-      DOMAINS: ${DOMAINS}
-      PUBLIC_KEY_TYPE: ${PUBLIC_KEY_TYPE}
-      RENEWAL_TIME: ${RENEWAL_TIME}
-      PROVIDER: ${PROVIDER}
-    volumes:
-      - lets-encrypt:/etc/letsencrypt
-    labels:
-      io.rancher.container.create_agent: 'true'
-      io.rancher.container.agent.role: 'environment'
 
 volumes:
   lets-encrypt:
