@@ -5,6 +5,7 @@ services:
     image: wordpress:php5.6-fpm-alpine
     environment:
       WORDPRESS_DB_PASSWORD: ${sql_wordpress_password}
+      WORDPRESS_DB_USER: ${sql_wordpress_name}
       WORDPRESS_DB_NAME: ${sql_wordpress_name}
     links:
       - db:mysql
@@ -18,6 +19,9 @@ services:
     image: mariadb
     environment:
       MYSQL_ROOT_PASSWORD: ${sql_root_password}
+      MYSQL_DATABASE: ${sql_wordpress_name}
+      MYSQL_USER: ${sql_wordpress_name}
+      MYSQL_PASSWORD: ${sql_wordpress_password}
 
 
 volumes:
