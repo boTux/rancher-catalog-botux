@@ -35,8 +35,6 @@ services:
       - wordpress-data
 
   wordpress-data:
-    labels:
-      io.rancher.container.start_once: 'true'
     image: wordpress:latest
     entrypoint:
       - /bin/true
