@@ -24,9 +24,9 @@ wordpress:
     traefik.enable: ${lb_enable}
     traefik.domain: ${lb_domain}
     traefik.protocol: http
-    {{- if eq .Values.domain_enable "true" -}}
-      traefik.alias.fqdn: ${domain}
-    {{- end}}
+{{- if eq .Values.domain_enable "true" -}}
+    traefik.alias.fqdn: ${domain}
+{{- end}}
     traefik.port: 80
     traefik.acme: ${letsencrypt}
     traefik.frontend.passHostHeader: 'true'
