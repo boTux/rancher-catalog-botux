@@ -1,44 +1,44 @@
-version: '2'
-services:
-
-  wordpress:
-    image: wordpress:latest
-    environment:
-      WORDPRESS_DB_PASSWORD: ${sql_wordpress_password}
-      WORDPRESS_DB_USER: ${sql_wordpress_name}
-      WORDPRESS_DB_NAME: ${sql_wordpress_name}
-    links:
-      - db:mysql
+wordpress-data:
+    net: none
     labels:
-      io.rancher.sidekicks: wordpress-data
-      traefik.enable: ${lb_enable}
-      traefik.domain: ${lb_domain}
-      traefik.protocol: ${lb_proto}
-      traefik.alias.fqdn: ${domain}
-      traefik.port: ${port}
-      traefik.acme: ${letsencrypt}
-      traefik.frontend.passHostHeader: 'true'
-      io.rancher.container.hostname_override: container_name
-    volumes_from:
-      - wordpress-data
-
-  db:
-    image: mariadb
-    labels:
-      io.rancher.sidekicks: wordpress-data
-    environment:
-      MYSQL_ROOT_PASSWORD: ${sql_root_password}
-      MYSQL_DATABASE: ${sql_wordpress_name}
-      MYSQL_USER: ${sql_wordpress_name}
-      MYSQL_PASSWORD: ${sql_wordpress_password}
-    volumes_from:
-      - wordpress-data
-
-  wordpress-data:
-    image: wordpress:latest
-    entrypoint:
-      - /bin/true
+        io.rancher.container.hostname_override: container_name
+        io.rancher.container.start_once: true
     volumes:
-      - /var/www/html/
+      - /var/www/html
       - /var/lib/mysql
+    entrypoint: /bin/true
+    image: busybox
 
+wordpress:
+  restart: always
+  image: wordpress:latest
+  environment:
+    WORDPRESS_DB_PASSWORD: ${sql_wordpress_password}
+    WORDPRESS_DB_USER: ${sql_wordpress_name}
+    WORDPRESS_DB_NAME: ${sql_wordpress_name}
+  links:
+    - db:mysql
+  labels:
+    io.rancher.container.hostname_override: container_name
+    io.rancher.sidekicks: wordpress-data
+    traefik.enable: ${lb_enable}
+    traefik.domain: ${lb_domain}
+    traefik.protocol: ${lb_proto}
+    traefik.alias.fqdn: ${domain}
+    traefik.port: ${port}
+    traefik.acme: ${letsencrypt}
+    traefik.frontend.passHostHeader: 'true'
+  volumes_from:
+    - wordpress-data
+
+db:
+  image: mariadb
+  labels:
+    io.rancher.sidekicks: wordpress-data
+  environment:
+    MYSQL_ROOT_PASSWORD: ${sql_root_password}
+    MYSQL_DATABASE: ${sql_wordpress_name}
+    MYSQL_USER: ${sql_wordpress_name}
+    MYSQL_PASSWORD: ${sql_wordpress_password}
+  volumes_from:
+    - wordpress-data
