@@ -39,7 +39,7 @@
       description: "http or https"
       label: "Protocol"
       required: true
-      default: "https"
+      default: "http"
       type: "string"
     - variable: domain
       description: "url of the site"

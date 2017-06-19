@@ -36,7 +36,7 @@ services:
 
   wordpress-data:
     tty: true
-    image: busybox:latest
+    image: wordpress:latest
     entrypoint:
       - /bin/true
     labels:
