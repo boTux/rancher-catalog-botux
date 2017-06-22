@@ -11,7 +11,7 @@ db:
 joomla:
   restart: always
   image: joomla:apache-php7
-    command:
+  command:
     - bash
     - -c
     - |
