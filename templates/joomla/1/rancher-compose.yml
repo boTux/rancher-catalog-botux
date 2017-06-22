@@ -1,0 +1,74 @@
+.catalog:
+  name: "joomla boTux"
+  version: "v0.3-botux-ssl"
+  description: "Blog tool, publishing platform and CMS"
+  uuid: joomla-1
+  minimum_rancher_version: v0.51.0
+  questions:
+    - variable: projet_name
+      description: "Nom du projet. Use in volumes name."
+      label: "Projet:"
+      required: true
+      default: "domain-ext"
+      type: "string"
+    - variable: lb_domain
+      description: "Traefik loadbalancer wildcard domain."
+      label: "Load-balancer domain"
+      required: true
+      default: "lb.site.xyz"
+      type: "string"
+    - variable: sql_root_password
+      description: "root@sql"
+      label: "Root SQL password"
+      required: true
+      default: "BIG_STRONG_PASSWORD"
+      type: "string"
+    - variable: sql_joomla_password
+      description: "joomla@sql"
+      label: "joomla SQL password"
+      required: true
+      default: "BIG_STRONG_PASSWORD_WP"
+      type: "string"
+    - variable: sql_joomla_name
+      description: "SQL joomla database name"
+      label: "SQL Database Name"
+      required: true
+      default: "joomla"
+      type: "string"
+    - variable: lb_enable
+      description: "Acticate traefik"
+      label: "LoadBalancer"
+      required: true
+      default: "true"
+      type: "string"
+    - variable: lb_proto
+      description: "http or https"
+      label: "Protocol"
+      required: true
+      default: "http"
+      type: "string"
+    - variable: domain
+      description: "url of the site"
+      label: "Domain"
+      required: false
+      default: "joomla.site.xyz"
+      type: "string"
+    - variable: port
+      description: "port to link"
+      label: "Port"
+      required: true
+      default: "80"
+      type: "string"
+    - variable: letsencrypt
+      description: "Cert ssl letsencrypt"
+      label: "SSL"
+      required: true
+      default: "true"
+      type: "string"
+joomla:
+  health_check:
+    port: 80
+    interval: 5000
+    unhealthy_threshold: 3
+    healthy_threshold: 2
+    response_timeout: 5000

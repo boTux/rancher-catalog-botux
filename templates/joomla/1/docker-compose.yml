@@ -1,0 +1,42 @@
+db:
+  image: mariadb
+  environment:
+    MYSQL_ROOT_PASSWORD: ${sql_root_password}
+    MYSQL_DATABASE: ${sql_joomla_name}
+    MYSQL_USER: ${sql_joomla_name}
+    MYSQL_PASSWORD: ${sql_joomla_password}
+  volumes:
+    - ${projet_name}-sql:/var/lib/mysql
+
+joomla:
+  restart: always
+  image: joomla:apache-php7
+    command:
+    - bash
+    - -c
+    - |
+      echo 'Starting custom init script...' ;
+      apt update ;
+      apt install -y sendmail ;
+      rm -rf /var/lib/apt/lists/* ;
+      /usr/sbin/service sendmail start ;
+      echo 'Done, starting apache.' ; /docker-entrypoint.sh ;
+  environment:
+    JOOMLA_DB_PASSWORD: ${sql_joomla_password}
+    JOOMLA_DB_USER: ${sql_joomla_name}
+    JOOMLA_DB_NAME: ${sql_joomla_name}
+  volumes:
+    - ${projet_name}-joomla:/usr/src/joomla
+    - ${projet_name}-www:/var/www/html
+  links:
+    - db:mysql
+  labels:
+    io.rancher.container.hostname_override: container_name
+    traefik.enable: ${lb_enable}
+    traefik.domain: ${lb_domain}
+    traefik.protocol: ${lb_proto}
+    traefik.alias.fqdn: ${domain}
+    traefik.port: ${port}
+    traefik.acme: ${letsencrypt}
+    traefik.frontend.passHostHeader: 'true'
+
