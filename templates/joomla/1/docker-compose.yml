@@ -20,7 +20,7 @@ joomla:
       apt install -y sendmail ;
       rm -rf /var/lib/apt/lists/* ;
       /usr/sbin/service sendmail start ;
-      echo 'Done, starting apache.' ; /docker-entrypoint.sh ;
+      echo 'Done, starting apache.' ;
   environment:
     JOOMLA_DB_PASSWORD: ${sql_joomla_password}
     JOOMLA_DB_USER: ${sql_joomla_name}
