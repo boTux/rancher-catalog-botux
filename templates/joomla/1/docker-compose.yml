@@ -10,17 +10,7 @@ db:
 
 joomla:
   restart: always
-  image: joomla:apache-php7
-  command:
-    - bash
-    - -c
-    - |
-      echo 'Starting custom init script...' ;
-      apt update ;
-      apt install -y sendmail ;
-      rm -rf /var/lib/apt/lists/* ;
-      /usr/sbin/service sendmail start ;
-      echo 'Done, starting apache.' ;
+  image: registry.enigm.com/sysadmin/docker/webapps/joomla:latest
   environment:
     JOOMLA_DB_PASSWORD: ${sql_joomla_password}
     JOOMLA_DB_USER: ${sql_joomla_name}
