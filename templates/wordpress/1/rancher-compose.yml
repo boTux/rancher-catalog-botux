@@ -1,0 +1,84 @@
+.catalog:
+  name: "Wordpress boTux"
+  version: "v0.2.8-botux-ssl"
+  description: "Blog tool, publishing platform and CMS"
+  uuid: Wordpress-1
+  minimum_rancher_version: v0.51.0
+  questions:
+    - variable: projet_name
+      description: "Name of the project. Use in volumes name."
+      label: "Project:"
+      required: true
+      default: "domain-xyz"
+      type: "string"
+    - variable: lb_domain
+      description: "Traefik loadbalancer domain."
+      label: "Load-balancer domain"
+      required: true
+      default: "lb.site.xyz"
+      type: "string"
+    - variable: sql_root_password
+      description: "root@sql"
+      label: "Root SQL password"
+      required: true
+      default: "BIG_STRONG_PASSWORD"
+      type: "string"
+    - variable: sql_wordpress_password
+      description: "wordpress@sql"
+      label: "Wordpress SQL password"
+      required: true
+      default: "BIG_STRONG_PASSWORD_WP"
+      type: "string"
+    - variable: sql_wordpress_name
+      description: "SQL wordpress database name"
+      label: "SQL Database Name"
+      required: true
+      default: "wordpress"
+      type: "string"
+    - variable: lb_enable
+      description: "Activate traefik"
+      label: "LoadBalancer"
+      required: true
+      default: "true"
+      type: enum
+      options:
+        - false
+        - true
+    - variable: domain_enable
+      description: "External domain support."
+      label: "Use external domain"
+      required: true
+      default: "true"
+      type: enum
+      options:
+        - false
+        - true
+    - variable: domain
+      description: "url of the site"
+      label: "Domain"
+      required: false
+      default: "wordpress.site.xyz"
+      type: "string"
+    - variable: letsencrypt
+      description: "Cert ssl letsencrypt"
+      label: "SSL"
+      required: true
+      default: "true"
+      type: enum
+      options:
+        - false
+        - true
+wordpress:
+  health_check:
+    port: 80
+    interval: 5000
+    unhealthy_threshold: 3
+    healthy_threshold: 2
+    response_timeout: 5000
+db:
+  health_check:
+    port: 3306
+    interval: 5000
+    unhealthy_threshold: 3
+    healthy_threshold: 2
+    response_timeout: 5000
