@@ -10,7 +10,7 @@ db:
 
 wordpress:
   restart: always
-  image: wordpress:latest
+  image: registry.enigm.com/sysadmin/docker/webapps/wordpress:latest
   environment:
     WORDPRESS_DB_PASSWORD: ${sql_wordpress_password}
     WORDPRESS_DB_USER: ${sql_wordpress_name}
@@ -21,6 +21,7 @@ wordpress:
     - db:mysql
   labels:
     io.rancher.container.hostname_override: container_name
+    io.rancher.container.pull_image: always
     traefik.enable: ${lb_enable}
     traefik.domain: ${lb_domain}
     traefik.protocol: http

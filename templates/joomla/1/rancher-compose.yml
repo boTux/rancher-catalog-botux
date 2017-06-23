@@ -114,3 +114,10 @@ joomla:
     unhealthy_threshold: 3
     healthy_threshold: 2
     response_timeout: 5000
+db:
+  health_check:
+    port: 3306
+    interval: 5000
+    unhealthy_threshold: 3
+    healthy_threshold: 2
+    response_timeout: 5000
