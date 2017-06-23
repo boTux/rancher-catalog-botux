@@ -64,6 +64,6 @@ sftp:
     - ${projet_name}-www:/home/${sftp_user}/${projet_name}/www
   tty: true
   ports:
-    - 2202:22/tcp
+    - ${sftp_port}:22/tcp
   command:
     - ${sftp_user}:${sftp_pass}:${sftp_group}

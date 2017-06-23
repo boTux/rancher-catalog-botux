@@ -53,6 +53,12 @@
       required: true
       default: "33"
       type: "string"
+    - variable: sftp_port
+      description: "SFTP port"
+      label: "Port SFTP"
+      required: true
+      default: "2205"
+      type: "string"
     - variable: lb_enable
       description: "Acticate traefik"
       label: "LoadBalancer"
