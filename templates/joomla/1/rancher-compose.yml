@@ -35,6 +35,24 @@
       required: true
       default: "joomla"
       type: "string"
+    - variable: sftp_user
+      description: "SFTP user and group, use user:password:group, for joomla use group 33."
+      label: "User SFTP"
+      required: true
+      default: "botux"
+      type: "string"
+    - variable: sftp_pass
+      description: "SFTP password"
+      label: "Password SFTP"
+      required: true
+      default: "password"
+      type: "string"
+    - variable: sftp_group
+      description: "SFTP group, for joomla use group 33."
+      label: "Group SFTP"
+      required: true
+      default: "33"
+      type: "string"
     - variable: lb_enable
       description: "Acticate traefik"
       label: "LoadBalancer"
@@ -64,6 +82,24 @@
       label: "SSL"
       required: true
       default: "true"
+      type: "string"
+    - variable: postfix_network
+      description: "Network allow for sending emails"
+      label: "Mail Network"
+      required: true
+      default: "10.0.0.0/8, 127.0.0.0/8"
+      type: "string"
+    - variable: postfix_root_alias
+      description: "Email root alias"
+      label: "Mail root"
+      required: true
+      default: "contact@site.xyz"
+      type: "string"
+    - variable: postfix_mailname
+      description: "Hostname"
+      label: "Mailname"
+      required: true
+      default: "reverse.site.xyz"
       type: "string"
 joomla:
   health_check:

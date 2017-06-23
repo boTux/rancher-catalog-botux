@@ -30,3 +30,40 @@ joomla:
     traefik.acme: ${letsencrypt}
     traefik.frontend.passHostHeader: 'true'
 
+mail:
+  image: tozd/postfix
+  environment:
+    MY_NETWORKS: ${postfix_network}
+    ROOT_ALIAS: ${postfix_root_alias}
+    MAILNAME: ${postfix_mailname}
+  stdin_open: true
+  volumes:
+    - ${projet_name}-postfix-log:/var/log/postfix
+    - ${projet_name}-postfix-spool:/var/spool/postfix
+  tty: true
+
+pma:
+  image: phpmyadmin/phpmyadmin
+  stdin_open: true
+  tty: true
+  links:
+    - db:db
+  labels:
+    traefik.enable: ${lb_enable}
+    traefik.domain: ${lb_domain}
+    traefik.protocol: http
+    traefik.alias.fqdn: ${domain}
+    traefik.port: 80
+    traefik.acme: ${letsencrypt}
+    traefik.frontend.passHostHeader: 'true'
+
+sftp:
+  image: atmoz/sftp
+  stdin_open: true
+  volumes:
+    - ${projet_name}-www:/home/${sftp_user}/${projet_name}/www
+  tty: true
+  ports:
+    - 2202:22/tcp
+  command:
+    - ${sftp_user}:${sftp_pass}:${sftp_group}
