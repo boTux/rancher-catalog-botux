@@ -121,3 +121,23 @@ db:
     unhealthy_threshold: 3
     healthy_threshold: 2
     response_timeout: 5000
+sftp:
+  health_check:
+    port: 22
+    interval: 5000
+    unhealthy_threshold: 3
+    healthy_threshold: 2
+    response_timeout: 5000
+pma:
+  scale: 1
+  start_on_create: true
+  health_check:
+    response_timeout: 2000
+    healthy_threshold: 2
+    port: 80
+    unhealthy_threshold: 3
+    initializing_timeout: 60000
+    interval: 2000
+    strategy: recreate
+    request_line: GET "/" "HTTP/1.0"
+    reinitializing_timeout: 60000
