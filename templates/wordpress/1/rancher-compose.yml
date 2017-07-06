@@ -35,18 +35,18 @@
       required: true
       default: "wordpress"
       type: "string"
-    - variable: lb_enable
-      description: "Activate traefik"
-      label: "LoadBalancer"
+    - variable: domain_enable
+      description: "External domain support."
+      label: "Use external domain"
       required: true
       default: "true"
       type: enum
       options:
         - false
         - true
-    - variable: domain_enable
-      description: "External domain support."
-      label: "Use external domain"
+    - variable: lb_enable
+      description: "Activate traefik"
+      label: "LoadBalancer"
       required: true
       default: "true"
       type: enum
