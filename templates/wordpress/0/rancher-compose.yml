@@ -44,15 +44,6 @@
       options:
         - false
         - true
-    - variable: domain_enable
-      description: "External domain support."
-      label: "Use external domain"
-      required: true
-      default: "true"
-      type: enum
-      options:
-        - false
-        - true
     - variable: domain
       description: "url of the site"
       label: "Domain"
