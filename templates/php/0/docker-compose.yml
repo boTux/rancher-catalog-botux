@@ -1,0 +1,27 @@
+db:
+  image: mariadb
+  environment:
+    MYSQL_ROOT_PASSWORD: ${sql_root_password}
+    MYSQL_DATABASE: ${sql_php_name}
+    MYSQL_USER: ${sql_php_name}
+    MYSQL_PASSWORD: ${sql_php_password}
+  volumes:
+    - ${projet_name}-sql:/var/lib/mysql
+
+php:
+  restart: always
+  image: registry.enigm.com/sysadmin/docker/php:latest
+  volumes:
+    - ${projet_name}-www:/var/www/html
+  links:
+    - db:mysql
+  labels:
+    io.rancher.container.hostname_override: container_name
+    traefik.enable: ${lb_enable}
+    traefik.domain: ${lb_domain}
+    traefik.protocol: ${lb_proto}
+    traefik.alias.fqdn: ${domain}
+    traefik.port: ${port}
+    traefik.acme: ${letsencrypt}
+    traefik.frontend.passHostHeader: 'true'
+
