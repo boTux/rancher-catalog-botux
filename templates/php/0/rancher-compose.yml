@@ -51,7 +51,7 @@
       description: "url of the site"
       label: "Domain"
       required: false
-      default: "php.site.xyz"
+      default: ""
       type: "string"
     - variable: port
       description: "port to link"
